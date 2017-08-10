@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TicTacToe</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        
+        <div id="app">
+            <h1>Tic Tac Toe</h1>
+            
+            <div id="one-or-two" hidden>
+                <h2>One Player or Two Player?</h2>
+                <button>One Player</button>
+                <button>Two Player</button>
+            </div>
+            
+            <div id="whosTurn">
+                <span :class="{active: currentPlayer==='X'}">X</span > | 
+                <span :class="{active: currentPlayer==='O'}">O</span>
+            </div>
+        
+            <table @click="mark">
+                <tr>
+                    <td id="_0">{{ gameboard[0] }}</td>
+                    <td id="_1" class="vertical">{{ gameboard[1] }}</td>
+                    <td id="_2">{{ gameboard[2] }}</td>
+                </tr>
+                <tr class="horizontal">
+                    <td id="_3">{{ gameboard[3] }}</td>
+                    <td id="_4" class="vertical">{{ gameboard[4] }}</td>
+                    <td id="_5">{{ gameboard[5] }}</td>
+                </tr>
+                <tr>
+                    <td id="_6">{{ gameboard[6] }}</td>
+                    <td id="_7" class="vertical">{{ gameboard[7] }}</td>
+                    <td id="_8">{{ gameboard[8] }}</td>
+                </tr>
+
+            </table>
+            
+            <div v-show="someoneHasWon" id="won">
+                <h2>{{ winner }} Won!</h2>
+                <h3>Play Again?</h3>
+                <button @click="resetBoard">Play Again</button>
+                <button @click="goodbye = true">End Game</button>
+            </div>
+            
+            <div v-show="goodbye" id="bye">
+                <h1>Goodbye! Thanks for playing!</h1>
+            </div>
+<!--
+            <div v-else>
+                <h2>No One Has Won Yet</h2>
+            </div>
+-->
+        
+        </div>
+        
+
+        <script src="https://unpkg.com/vue"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
