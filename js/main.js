@@ -29,7 +29,6 @@ var ticTacToe = function() {
             '246': 0
         }
     }
-    var spacesLeft = '012345678';
     
     var computerPlayer = false;
     var endgame = false;
@@ -47,7 +46,8 @@ var ticTacToe = function() {
             currentPlayer: 'X',
             someoneHasWon: false,
             winner: '',
-            goodbye: false
+            goodbye: false,
+            spacesLeft:'012345678'
             
         },
         methods: {
@@ -55,8 +55,10 @@ var ticTacToe = function() {
     //            console.log(e.target.id);
                 var index = Number(e.target.id[1]);
     //            console.log(index);
-                if(this.gameboard[index] === ' ' && !this.someoneHasWon) {
+                if(this.gameboard[index] === ' ' && !this.someoneHasWon && this.spacesLeft !== '') {
                     Vue.set(this.gameboard, index, this.currentPlayer);
+                    this.spacesLeft = this.spacesLeft.replace(index, '');
+                    console.log(this.spacesLeft);
                     if(this.currentPlayer === 'X') {
                         pX += index;
                         this.someoneHasWon = checkWin(pX);
@@ -69,6 +71,7 @@ var ticTacToe = function() {
                     
                     this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
                 }
+                
     //            console.log(this.gameboard);
             },
             resetBoard() {
@@ -84,6 +87,30 @@ var ticTacToe = function() {
                                 ' ', ' ', ' '];
                 vm.someoneHasWon = false;
                 vm.winner = '';
+                
+                players = {
+                    pX: {
+                        '012': 0, 
+                        '345': 0, 
+                        '678': 0, 
+                        '036': 0, 
+                        '147': 0, 
+                        '258': 0, 
+                        '048': 0, 
+                        '246': 0
+                    },
+                    pO: {
+                        '012': 0, 
+                        '345': 0, 
+                        '678': 0, 
+                        '036': 0, 
+                        '147': 0, 
+                        '258': 0, 
+                        '048': 0, 
+                        '246': 0
+                    }
+                }
+                this.spacesLeft = '012345678';
             }
         }
     });
@@ -106,6 +133,12 @@ var ticTacToe = function() {
         }
         
         return false;
+    }
+    
+    function easyComp() {
+        
+        
+        
     }
     
     ////**OUTER LOOP**////

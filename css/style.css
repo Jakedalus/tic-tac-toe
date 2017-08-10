@@ -45,7 +45,7 @@ td {
     text-align: center;
 }
 
-#won, #bye {
+#won, #draw, #bye {
     position: fixed;
     left: 50%;
     top: 50%;

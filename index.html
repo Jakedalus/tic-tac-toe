@@ -50,6 +50,13 @@
                 <button @click="goodbye = true">End Game</button>
             </div>
             
+            <div v-show="spacesLeft === ''" id="draw">
+                <h2>It's a draw!</h2>
+                <h3>Play Again?</h3>
+                <button @click="resetBoard">Play Again</button>
+                <button @click="goodbye = true">End Game</button>
+            </div>
+            
             <div v-show="goodbye" id="bye">
                 <h1>Goodbye! Thanks for playing!</h1>
             </div>
