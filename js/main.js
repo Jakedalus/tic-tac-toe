@@ -47,43 +47,38 @@ var ticTacToe = function() {
             spacesLeft:'012345678',
             computerPlayer: '',
             difficulty: '',
-            XorO: 'X'
+            XorO: ''
             
         },
         methods: {
             mark: function(e) {
     //            console.log(e.target.id);
-                var index = Number(e.target.id[1]);
-    //            console.log(index);
-                if(this.gameboard[index] === ' ' && 
-                  !this.someoneHasWon && 
-                   this.spacesLeft !== '' && 
-                   this.XorO === this.currentPlayer) {
-                        markBoard(index);
+                if(this.XorO === this.currentPlayer || this.computerPlayer === false) {
+                    
+                    var index = Number(e.target.id[1]);
+                    console.log("Clicked: ", index);
+
+                    if(this.gameboard[index] === ' ' && 
+                      !this.someoneHasWon && 
+                       this.spacesLeft !== '') {
+                            markBoard(index);
+                    }
+
+                    if(this.computerPlayer && this.XorO !== this.currentPlayer && !this.someoneHasWon && 
+                       this.spacesLeft !== '') {
+                            makeComputerMove();
+                    }
+                
                 }
                 
-                if(this.computerPlayer && this.XorO !== this.currentPlayer && !this.someoneHasWon && 
-                   this.spacesLeft !== '') {
-                    switch(this.difficulty) {
-                        case 'easy':
-                            setTimeout(easyMove, 500);
-                            break;
-                        case 'medium':
-                            setTimeout(mediumMove, 500);
-                            break;
-                        case 'hard':
-                            setTimeout(hardMove, 500);
-                            break;
-                    }
-                }
+                
                 
     //            console.log(this.gameboard);
             },
             resetBoard: function() {
                 pX = '';
                 pO = '';
-                computerPlayer = false;
-                endgame = false;
+//                computerPlayer = false;
 
                 this.currentPlayer = 'X';
                 
@@ -116,18 +111,23 @@ var ticTacToe = function() {
                     }
                 }
                 this.spacesLeft = '012345678';
+                if(this.XorO == 'O') makeComputerMove()
             },
             chooseOneOrTwo: function(cp) {
                 this.computerPlayer = cp; 
-                console.log(this.computerPlayer);
+                if(this.computerPlayer === false) this.XorO = 'X';
+//                console.log(this.computerPlayer);
             },
             chooseDifficulty: function(setting) {
                 this.difficulty = setting;
-                console.log(this.difficulty);
+//                console.log(this.difficulty);
             },
             chooseXorO: function(xo) {
                 this.XorO = xo;
-                console.log(this.XorO);
+//                console.log(this.XorO);
+                //IF PLAYER CHOOSES O, MAKE COMPUTER GO FIRST
+                if(this.XorO === 'O') makeComputerMove();
+                
             }
         }
     });
@@ -162,10 +162,10 @@ var ticTacToe = function() {
     function checkWin(player) {
         
         for(win of wins) {
-            console.log("Testing winning combo: ", win);
+//            console.log("Testing winning combo: ", win);
             var hasWon = true;
             for(num of win) {
-                console.log("Position: ", num);
+//                console.log("Position: ", num);
                 if(player.indexOf(num) === -1) {
                     hasWon = false;
                 }
@@ -179,18 +179,81 @@ var ticTacToe = function() {
         return false;
     }
     
+    function makeComputerMove() {
+        switch(vm.difficulty) {
+            case 'easy':
+                setTimeout(easyMove, 500);
+                break;
+            case 'medium':
+                setTimeout(mediumMove, 500);
+                break;
+            case 'hard':
+                setTimeout(hardMove, 500);
+                break;
+        }
+    }
+    
     function easyMove() {
         
         var spaces = vm.spacesLeft.split("").map(Number);
         var move = spaces[Math.round(Math.random() * (spaces.length - 1))];
-        console.log("Computer marks: ", move);
+//        console.log("Computer marks: ", move);
         markBoard(move);
         
     }
     
     function mediumMove() {
         
+        var compWins = vm.XorO === 'X' ? possibleWins.pO : possibleWins.pX;
+        var compMoves = vm.XorO === 'X' ? pO : pX;
         
+        var humanWins = vm.XorO === 'X' ? possibleWins.pX : possibleWins.pO; 
+        var humanMoves = vm.XorO === 'X' ? pX : pO;
+        
+//        console.log("Human Moves: ", humanMoves);
+//        console.log("Computer Moves: ", compMoves);
+//        console.log(compWins, humanWins);
+        
+        var spaces = vm.spacesLeft.split("").map(Number);
+        var move = spaces[Math.round(Math.random() * (spaces.length - 1))];
+        
+        for(win in humanWins) {
+//            console.log("Human has: ", win, ":", humanWins[win]);
+            if(humanWins[win] == 2) {
+//                console.log("HUMAN MIGHT WIN!!");
+//                console.log(humanWins[win], win);
+                for(space of win) {
+//                    console.log("can I move here...", space, vm.spacesLeft.indexOf(space));
+                    if(vm.spacesLeft.indexOf(space) !== -1) {
+//                        console.log("Move here!!! ", space);
+                        move = space;
+                    }
+                }
+            }
+        }
+        
+        for(win in compWins) {
+//            console.log("Computer has: ", win, ":", compWins[win]);
+            if(compWins[win] === 2) {
+//                console.log("COMPUTER COULD WIN!!");
+//                console.log(compWins[win], win);
+                for(space of win) {
+//                    console.log("can I move here...", space, vm.spacesLeft.indexOf(space));
+                    if(vm.spacesLeft.indexOf(space) !== -1) {
+//                        console.log("Move here!!! ", space);
+                        move = space;
+                    }
+                }
+            }
+        }
+        
+        
+        
+//        console.log("Computer moves: ", move);
+        
+        
+        
+        markBoard(move);
         
     }
     
@@ -203,7 +266,8 @@ var ticTacToe = function() {
     function markBoard(index) {
         Vue.set(vm.gameboard, index, vm.currentPlayer);
         vm.spacesLeft = vm.spacesLeft.replace(index, '');
-        console.log(vm.spacesLeft);
+        console.log("//////////////");
+        console.log("Spaces left: ", vm.spacesLeft);
         if(vm.currentPlayer === 'X') {
             pX += index;
             vm.someoneHasWon = updatePossibleWins(index);
@@ -211,9 +275,10 @@ var ticTacToe = function() {
             pO += index;
             vm.someoneHasWon = updatePossibleWins(index);
         }
-        console.log(pX, pO);
-        console.log("someoneHasWon: ", vm.someoneHasWon);
-        console.log("possibleWins: ", possibleWins);
+        console.log(vm.currentPlayer, " marks ", index);
+//        console.log(pX, pO);
+//        console.log("someoneHasWon: ", vm.someoneHasWon);
+//        console.log("possibleWins: ", possibleWins);
 
 
         vm.currentPlayer = vm.currentPlayer === 'X' ? 'O' : 'X';
