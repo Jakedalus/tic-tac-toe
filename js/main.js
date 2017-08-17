@@ -259,7 +259,235 @@ var ticTacToe = function() {
     
     function hardMove() {
         
+        var compWins = vm.XorO === 'X' ? possibleWins.pO : possibleWins.pX;
+        var compMoves = vm.XorO === 'X' ? pO : pX;
         
+        var humanWins = vm.XorO === 'X' ? possibleWins.pX : possibleWins.pO; 
+        var humanMoves = vm.XorO === 'X' ? pX : pO;
+        
+        var spaces = vm.spacesLeft.split("").map(Number);
+        
+        // Random space if no better move
+        var move = spaces[Math.round(Math.random() * (spaces.length - 1))];
+        
+        // Side
+        if(vm.spacesLeft.indexOf(1) !== -1) {
+            console.log("***SIDE!***");
+            move = 1;
+        } else if(vm.spacesLeft.indexOf(3) !== -1) {
+            console.log("***SIDE!***");
+            move = 3;
+        } 
+         else if(vm.spacesLeft.indexOf(5) !== -1) {
+            console.log("***SIDE!***");
+            move = 5;
+        } 
+         else if(vm.spacesLeft.indexOf(7) !== -1) {
+            console.log("***SIDE!***");
+            move = 7;
+        } 
+        
+        // Corner
+        if(vm.spacesLeft.indexOf(0) !== -1) {
+            console.log("***CORNER!***");
+            move = 0;
+        } else if(vm.spacesLeft.indexOf(2) !== -1) {
+            console.log("***CORNER!***");
+            move = 2;
+        } 
+         else if(vm.spacesLeft.indexOf(6) !== -1) {
+            console.log("***CORNER!***");
+            move = 6;
+        } 
+         else if(vm.spacesLeft.indexOf(8) !== -1) {
+            console.log("***CORNER!***");
+            move = 8;
+        } 
+        
+        // Opposite Corner
+        if(humanMoves.indexOf(0) !== -1 && vm.spacesLeft.indexOf(8) !== -1) {
+            console.log("***OPPOSITE CORNER!***");
+            move = 8;
+        } else if(humanMoves.indexOf(2) !== -1 && vm.spacesLeft.indexOf(6) !== -1) {
+            console.log("***OPPOSITE CORNER!***");
+            move = 6;
+        } else if(humanMoves.indexOf(6) !== -1 && vm.spacesLeft.indexOf(2) !== -1) {
+            console.log("***OPPOSITE CORNER!***");
+            move = 2;
+        } else if(humanMoves.indexOf(8) !== -1 && vm.spacesLeft.indexOf(0) !== -1) {
+            console.log("***OPPOSITE CORNER!***");
+            move = 0;
+        }
+        
+        // Center
+        if(vm.spacesLeft.indexOf(4) !== -1) {
+            console.log("***CENTER!***");
+            move = 4;
+        }
+        
+        
+        // Block human fork
+        for(win in humanWins) {
+            if(humanWins[win] === 1 && vm.spacesLeft.length < 7) {
+                for(space of win) {
+                    for(win2 in humanWins) {
+                        if(win2.indexOf(space) !== -1 
+                           && humanWins[win2] === 1 
+                           && win !== win2 
+                           && compWins[win2] === 0
+                           && compWins[win] === 0) {
+                            
+                            
+                            // Block fork by 2-in-a-row
+                            for(c_win in compWins) {
+                                if(compWins[c_win] === 1 && humanWins[c_win] === 0) {
+                                    for(space of c_win) {
+                    //                    console.log("can I move here...", space, vm.spacesLeft.indexOf(space));
+                                        if(vm.spacesLeft.indexOf(space) !== -1) {
+                    //                        console.log("Move here!!! ", space);
+                                            console.log("***BLOCK FORK BY TWO-IN-A-ROW!***");
+                                            move = space;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            // Block fork directly
+                            if(vm.spacesLeft.indexOf(space) !== -1) {
+                                console.log("***BLOCK FORK!***");
+//                                console.log(compWins[win2], humanWins[win2]);
+//                                console.log(win, win2);
+                                move = space;
+                            }
+                        }
+                    }
+                }
+            }   
+        }
+        
+        // Fork
+        for(win in compWins) {
+            if(compWins[win] === 1) {
+                for(space of win) {
+                    for(win2 in compWins) {
+                        if(win2.indexOf(space) !== -1 
+                           && compWins[win2] === 1 
+                           && win !== win2 
+                           && humanWins[win2] === 0
+                           && humanWins[win] === 0) {
+                            if(vm.spacesLeft.indexOf(space) !== -1) {
+                                console.log("***FORK!***");
+//                                console.log(compWins[win2], humanWins[win2]);
+//                                console.log(win, win2);
+                                move = space;
+                            }
+                        }
+                    }
+                }
+            }   
+        }
+        
+        // If human can win, block
+        for(win in humanWins) {
+//            console.log("Human has: ", win, ":", humanWins[win]);
+            if(humanWins[win] == 2) {
+//                console.log("HUMAN MIGHT WIN!!");
+//                console.log(humanWins[win], win);
+                for(space of win) {
+//                    console.log("can I move here...", space, vm.spacesLeft.indexOf(space));
+                    if(vm.spacesLeft.indexOf(space) !== -1) {
+//                        console.log("Move here!!! ", space);
+                        console.log("***BLOCK!***");
+                        move = space;
+                    }
+                }
+            }
+        }
+        
+        
+        // If computer can win, win
+        for(win in compWins) {
+//            console.log("Computer has: ", win, ":", compWins[win]);
+            if(compWins[win] === 2) {
+//                console.log("COMPUTER COULD WIN!!");
+//                console.log(compWins[win], win);
+                for(space of win) {
+//                    console.log("can I move here...", space, vm.spacesLeft.indexOf(space));
+                    if(vm.spacesLeft.indexOf(space) !== -1) {
+//                        console.log("Move here!!! ", space);
+                        console.log("***WIN!***");
+                        move = space;
+                    }
+                }
+            }
+        }
+        
+        // If computer is an X opening the game
+        if(vm.XorO === 'O' && vm.spacesLeft.length === 9) {
+            console.log("***COMPUTER OPENS!***")
+            var move = spaces[Math.round(Math.random() * (spaces.length - 1))];
+            
+            ////////////
+            //DEBUG: Computer loses with edge opening, even though it shouldn't. 
+//            var edges = [1,3,5,7];
+//            move = edges[Math.floor(Math.random()*edges.length)];
+            ////////////
+        }
+        
+        // If computer is an O responding to the opening move
+        if(vm.XorO === 'X' && vm.spacesLeft.length === 8) {
+            console.log("***HUMAN OPENS!***");
+            // If opening move is the Center, move to a Corner
+            if(vm.spacesLeft.indexOf(4) === -1) {
+                var corners = [0,2,6,8];
+                move = corners[Math.floor(Math.random()*corners.length)];
+            
+            // If opening move is a Corner, move to Center
+            } else if(vm.spacesLeft.indexOf(0) === -1 ||
+                      vm.spacesLeft.indexOf(2) === -1 ||
+                      vm.spacesLeft.indexOf(6) === -1 ||
+                      vm.spacesLeft.indexOf(8) === -1) {
+                move = 4;
+                
+            // If opening move is an Edge, move to Center, a Corner next to the X, or an Edge opposite the X
+            } else {
+                var choices = ['center', 'corner', 'edge'];
+                var choice = choices[Math.floor(Math.random()*choices.length)];
+                switch(choice) {
+                    case 'center':
+                        move = 4;
+                        break;
+                    case 'corner':
+                        if(vm.spacesLeft.indexOf(1) === -1) {
+                            var arr = [0,2]
+                            move = arr[Math.floor(Math.random()*arr.length)];
+                        } else if(vm.spacesLeft.indexOf(3) === -1) {
+                            var arr = [0,6]
+                            move = arr[Math.floor(Math.random()*arr.length)];
+                        } else if(vm.spacesLeft.indexOf(5) === -1) {
+                            var arr = [2,8]
+                            move = arr[Math.floor(Math.random()*arr.length)];
+                        } else if(vm.spacesLeft.indexOf(7) === -1) {
+                            var arr = [6,8]
+                            move = arr[Math.floor(Math.random()*arr.length)];
+                        } 
+                        break;
+                    case 'edge':
+                        if(vm.spacesLeft.indexOf(1) === -1) {
+                            move = 7;
+                        } else if(vm.spacesLeft.indexOf(3) === -1) {
+                            move = 5;
+                        } else if(vm.spacesLeft.indexOf(5) === -1) {
+                            move = 3;
+                        } else if(vm.spacesLeft.indexOf(7) === -1) {
+                            move = 1;
+                        } 
+                        break;
+                }
+            }
+        }
+        
+        markBoard(move);
         
     }
     
@@ -284,37 +512,6 @@ var ticTacToe = function() {
         vm.currentPlayer = vm.currentPlayer === 'X' ? 'O' : 'X';
         
     }
-    
-    ////**OUTER LOOP**////
-//    while(!endgame) {
-        // One Player or Two Player
-        
-        // If One Player:
-            // Easy (random)
-                // CP randomly picks unmarked square
-            // Medium (knows winning configs)
-                // CP tries to mark winning combo or block P1 if has 2 in a row
-            // Hard (impossible to beat, knows strategy)
-                // Go for corners
-                // Block P1 if going to win
-
-        // If Two Player:
-            // Pick X or O
-            
-            // X goes first
-
-        // Gameplay:
-            ////**INNER LOOP**////
-//            while(!vm.someoneHasWon) {
-                
-                // Switch players every turn
-                // Check if player has a winning combo after move
-                
-//            }
-            
-            
-            
-//    }
     
 }
 
