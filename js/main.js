@@ -82,42 +82,14 @@ var ticTacToe = function() {
                 }
             },
             resetBoard: function() {
-                pX = '';
-                pO = '';
-//                computerPlayer = false;
-
-                this.currentPlayer = 'X';
-                
-                vm.gameboard = [' ', ' ', ' ', 
-                                ' ', ' ', ' ', 
-                                ' ', ' ', ' '];
-                vm.someoneHasWon = false;
-                vm.winner = '';
-                
-                possibleWins = {
-                    pX: {
-                        '012': 0, 
-                        '345': 0, 
-                        '678': 0, 
-                        '036': 0, 
-                        '147': 0, 
-                        '258': 0, 
-                        '048': 0, 
-                        '246': 0
-                    },
-                    pO: {
-                        '012': 0, 
-                        '345': 0, 
-                        '678': 0, 
-                        '036': 0, 
-                        '147': 0, 
-                        '258': 0, 
-                        '048': 0, 
-                        '246': 0
-                    }
-                }
-                this.spacesLeft = '012345678';
+                softReset();
                 if(this.XorO == 'O') makeComputerMove()
+            },
+            hardReset: function() {
+                softReset();
+                this.computerPlayer = '';
+                this.difficulty = '';
+                this.XorO = '';
             },
             chooseOneOrTwo: function(cp) {
                 this.computerPlayer = cp; 
@@ -137,6 +109,42 @@ var ticTacToe = function() {
             }
         }
     });
+    
+    function softReset() {
+        vm.currentPlayer = 'X';
+
+        vm.gameboard = [' ', ' ', ' ', 
+                        ' ', ' ', ' ', 
+                        ' ', ' ', ' '];
+        vm.someoneHasWon = false;
+        vm.winner = '';
+        vm.spacesLeft = '012345678';
+
+        pX = '';
+        pO = '';
+        possibleWins = {
+            pX: {
+                '012': 0, 
+                '345': 0, 
+                '678': 0, 
+                '036': 0, 
+                '147': 0, 
+                '258': 0, 
+                '048': 0, 
+                '246': 0
+            },
+            pO: {
+                '012': 0, 
+                '345': 0, 
+                '678': 0, 
+                '036': 0, 
+                '147': 0, 
+                '258': 0, 
+                '048': 0, 
+                '246': 0
+            }
+        }
+    }
     
     function updatePossibleWins(index) {
         
@@ -428,17 +436,76 @@ var ticTacToe = function() {
             }
         }
         
+        // If human responds to Computer opening Corner with a Corner (i.e., is Imperfect)
+        var cornersUsed = '0268';
+        for(space of vm.spacesLeft) {
+            if(cornersUsed.indexOf(space) !== -1) {
+                cornersUsed = cornersUsed.replace(space, '');
+//                console.log("Corners used: ", cornersUsed);
+            }
+        }
+        if(vm.XorO === 'O' && vm.spacesLeft.length === 7 && cornersUsed.length == 2) {
+            console.log("***HUMAN ERROR COMPUTER PLAYS CORNER!***");
+            if(vm.spacesLeft.indexOf(0) !== -1) {
+                move = 0;
+            } else if(vm.spacesLeft.indexOf(2) !== -1) {
+                move = 2;
+            } 
+             else if(vm.spacesLeft.indexOf(6) !== -1) {
+                move = 6;
+            } 
+             else if(vm.spacesLeft.indexOf(8) !== -1) {
+                move = 8;
+            } 
+        }
+        
+        // If human responds to Computer opening Edge with opposite Corner (i.e., is Imperfect)
+        if(vm.XorO === 'O' && vm.spacesLeft.length === 7) {
+            if(pX.indexOf('1') !== -1) {
+                if(pO.indexOf('6') !== -1 || pO.indexOf('8') !== -1) {
+                    console.log("***HUMAN PLAYS WRONG CORNER!***");
+                    move = pO.indexOf('6') !== -1  ? 0 : 2;
+                }
+            } else if(pX.indexOf('3') !== -1) {
+                if(pO.indexOf('2') !== -1 || pO.indexOf('8') !== -1) {
+                    console.log("***HUMAN PLAYS WRONG CORNER!***");
+                    move = pO.indexOf('2') !== -1  ? 0 : 6;
+                }
+            } else if(pX.indexOf('5') !== -1) {
+                if(pO.indexOf('0') !== -1 || pO.indexOf('6') !== -1) {
+                    console.log("***HUMAN PLAYS WRONG CORNER!***");
+                    move = pO.indexOf('0') !== -1  ? 2 : 8;
+                }
+            } else if(pX.indexOf('7') !== -1) {
+                if(pO.indexOf('0') !== -1 || pO.indexOf('2') !== -1) {
+                    console.log("***HUMAN PLAYS WRONG CORNER!***");
+                    move = pO.indexOf('0') !== -1  ? 6 : 8;
+                }
+            }
+        }
+        
+        
+            
+            
+        
         // If computer is an X opening the game
         if(vm.XorO === 'O' && vm.spacesLeft.length === 9) {
-            console.log("***COMPUTER OPENS!***")
+            console.log("***COMPUTER OPENS!***");
             var move = spaces[Math.round(Math.random() * (spaces.length - 1))];
             
             ////////////
-            //DEBUG: Computer loses with edge opening, even though it shouldn't. 
+            //DEBUG: Computer draws with edge opening, even though it shouldn't. 
 //            var edges = [1,3,5,7];
 //            move = edges[Math.floor(Math.random()*edges.length)];
             ////////////
+            
+            ////////////
+            //DEBUG: Computer should win with corner opening and imperfect human
+//            var corners = [0,2,6,8];
+//            move = corners[Math.floor(Math.random()*corners.length)];
+            ////////////
         }
+        
         
         // If computer is an O responding to the opening move
         if(vm.XorO === 'X' && vm.spacesLeft.length === 8) {
