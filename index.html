@@ -6,6 +6,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>TicTacToe</title>
+        <link href="https://fonts.googleapis.com/css?family=Cinzel|Montserrat|Rokkitt|Zilla+Slab" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
@@ -37,7 +38,7 @@
                 <span :class="{active: currentPlayer==='O'}">O</span>
             </div>
         
-            <table @click="mark">
+            <table @click="mark" :class="{'x-mark': currentPlayer ==='X', 'o-mark': currentPlayer === 'O'}">
                 <tr>
                     <td id="_0">{{ gameboard[0] }}</td>
                     <td id="_1" class="vertical">{{ gameboard[1] }}</td>

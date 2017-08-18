@@ -1,0 +1,96 @@
+$light-gray: rgb(139, 142, 143);
+$dark-gray: rgb(39, 42, 43);
+$sky-blue: rgb(0, 173, 255);
+$golden-yellow: rgb(245, 237, 24);
+$rose: rgb(255, 25, 53);
+
+$game-font: 'Montserrat', sans-serif;;
+$display-font: 'Zilla Slab', serif;
+
+html {
+    background: $dark-gray;
+}
+
+body {
+    color: $light-gray;
+}
+
+#app {
+    margin-top: 40px;
+}
+
+
+/*Setup Game Board*/
+h1 {
+    text-align: center;
+    font-family: $display-font;
+}
+
+table {
+    font-family: $game-font;
+    margin: 0 auto;
+//    color: red;
+    border-collapse: collapse;
+    margin-top: 80px;
+}
+
+
+td {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    font-size: 3em;
+}
+
+.horizontal td {
+    margin: -10px;
+    border-top: 4px solid $light-gray;
+    border-bottom: 4px solid $light-gray;
+}
+
+.vertical {
+    border-left: 4px solid rgb(139, 142, 143);
+    border-right: 4px solid rgb(139, 142, 143);
+}
+
+.active {
+    font-family: $game-font;
+    background-color: $light-gray;
+    color: $dark-gray;
+    padding: 3px;
+}
+
+.x-mark {
+    color: $sky-blue;
+}
+
+.o-mark {
+    color: $golden-yellow;
+}
+
+/*Messages*/
+#whosTurn {
+    width: 30%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#won, #draw, #bye, #x-or-o, #difficulty-setting, #one-or-two {
+    font-family: $display-font;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: $rose;
+    color: $dark-gray;
+    opacity: 0.9;
+    padding: 10px;
+    text-align: center;
+}
+
+#bye {
+    background-color: darkseagreen;
+}
+
+
+

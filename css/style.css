@@ -1,63 +1,63 @@
-#app {
-    margin-top: 40px;
-}
+html {
+  background: #272a2b; }
 
+body {
+  color: #8b8e8f; }
+
+#app {
+  margin-top: 40px; }
 
 /*Setup Game Board*/
 h1 {
-    text-align: center;
-    
-}
+  text-align: center;
+  font-family: "Zilla Slab", serif; }
 
 table {
-    margin: 0 auto;
-    margin-top: 80px;
-}
-
+  font-family: "Montserrat", sans-serif;
+  margin: 0 auto;
+  border-collapse: collapse;
+  margin-top: 80px; }
 
 td {
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    font-size: 3em;
-}
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  font-size: 3em; }
 
 .horizontal td {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-}
+  margin: -10px;
+  border-top: 4px solid #8b8e8f;
+  border-bottom: 4px solid #8b8e8f; }
 
 .vertical {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-}
+  border-left: 4px solid #8b8e8f;
+  border-right: 4px solid #8b8e8f; }
 
 .active {
-    background-color: black;
-    color: white;
-    padding: 3px;
-}
+  font-family: "Montserrat", sans-serif;
+  background-color: #8b8e8f;
+  color: #272a2b;
+  padding: 3px; }
 
 /*Messages*/
 #whosTurn {
-    width: 30%;
-    margin: 0 auto;
-    text-align: center;
-}
+  width: 30%;
+  margin: 0 auto;
+  text-align: center; }
 
 #won, #draw, #bye, #x-or-o, #difficulty-setting, #one-or-two {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background: lightgray;
-    padding: 10px;
-    text-align: center;
-}
+  font-family: "Zilla Slab", serif;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #ff1935;
+  color: #272a2b;
+  opacity: 0.9;
+  padding: 10px;
+  text-align: center; }
 
 #bye {
-    background-color: darkseagreen;
-}
+  background-color: darkseagreen; }
 
-
-
+/*# sourceMappingURL=style.css.map */
