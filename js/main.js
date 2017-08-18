@@ -49,7 +49,7 @@ var ticTacToe = function() {
             difficulty: '',
             XorO: ''
             
-        },
+        }, 
         methods: {
             mark: function(e) {
     //            console.log(e.target.id);
@@ -74,6 +74,12 @@ var ticTacToe = function() {
                 
                 
     //            console.log(this.gameboard);
+            },
+            markColor: function(id) {
+                return {
+                    'x-mark': this.gameboard[id] === 'X',
+                    'o-mark': this.gameboard[id] === 'O',
+                }
             },
             resetBoard: function() {
                 pX = '';

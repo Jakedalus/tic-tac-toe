@@ -38,24 +38,24 @@
                 <span :class="{active: currentPlayer==='O'}">O</span>
             </div>
         
-            <table @click="mark" :class="{'x-mark': currentPlayer ==='X', 'o-mark': currentPlayer === 'O'}">
-                <tr>
-                    <td id="_0">{{ gameboard[0] }}</td>
-                    <td id="_1" class="vertical">{{ gameboard[1] }}</td>
-                    <td id="_2">{{ gameboard[2] }}</td>
-                </tr>
-                <tr class="horizontal">
-                    <td id="_3">{{ gameboard[3] }}</td>
-                    <td id="_4" class="vertical">{{ gameboard[4] }}</td>
-                    <td id="_5">{{ gameboard[5] }}</td>
-                </tr>
-                <tr>
-                    <td id="_6">{{ gameboard[6] }}</td>
-                    <td id="_7" class="vertical">{{ gameboard[7] }}</td>
-                    <td id="_8">{{ gameboard[8] }}</td>
-                </tr>
+            <div id="table" @click="mark" >
+<!--                <div class="row">-->
+                    <div class="cell" :class="markColor(0)" id="_0">{{ gameboard[0] }}</div>
+                    <div class="cell vertical" :class="markColor(1)" id="_1" >{{ gameboard[1] }}</div>
+                    <div class="cell" :class="markColor(2)" id="_2">{{ gameboard[2] }}</div>
+<!--                </div>-->
+<!--                <div class="row" class="horizontal">-->
+                    <div class="cell horizontal" :class="markColor(3)" id="_3">{{ gameboard[3] }}</div>
+                    <div class="cell vertical horizontal" :class="markColor(4)" id="_4" >{{ gameboard[4] }}</div>
+                    <div class="cell horizontal" :class="markColor(5)" id="_5">{{ gameboard[5] }}</div>
+<!--                </div>-->
+<!--                <div class="row">-->
+                    <div class="cell" :class="markColor(6)" id="_6">{{ gameboard[6] }}</div>
+                    <div class="cell vertical" :class="markColor(7)" id="_7" >{{ gameboard[7] }}</div>
+                    <div class="cell" :class="markColor(8)" id="_8">{{ gameboard[8] }}</div>
+<!--                </div>-->
 
-            </table>
+            </div>
             
             <div v-show="someoneHasWon" id="won">
                 <h2>{{ winner }} Won!</h2>

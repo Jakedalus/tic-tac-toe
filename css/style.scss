@@ -9,14 +9,17 @@ $display-font: 'Zilla Slab', serif;
 
 html {
     background: $dark-gray;
+
 }
 
 body {
     color: $light-gray;
+
 }
 
 #app {
     margin-top: 40px;
+
 }
 
 
@@ -26,29 +29,40 @@ h1 {
     font-family: $display-font;
 }
 
-table {
+#table {
+    width: 310px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    
     font-family: $game-font;
     margin: 0 auto;
-//    color: red;
-    border-collapse: collapse;
+
     margin-top: 80px;
 }
 
-
-td {
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    font-size: 3em;
+.row {
+    
 }
 
-.horizontal td {
-    margin: -10px;
+
+.cell {
+    width: 100px;
+    height: 80px;
+    padding-top: 20px;
+    text-align: center;
+    
+    font-size: 3em;
+
+}
+
+.horizontal{
+
     border-top: 4px solid $light-gray;
     border-bottom: 4px solid $light-gray;
 }
 
-.vertical {
+.vertical  {
     border-left: 4px solid rgb(139, 142, 143);
     border-right: 4px solid rgb(139, 142, 143);
 }
