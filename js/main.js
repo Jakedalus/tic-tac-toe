@@ -231,6 +231,23 @@ var ticTacToe = function() {
         var spaces = vm.spacesLeft.split("").map(Number);
         var move = spaces[Math.round(Math.random() * (spaces.length - 1))];
         
+        // Computer tries to get two-in-a-row
+        for(win in compWins) {
+//            console.log("Computer has: ", win, ":", compWins[win]);
+            if(compWins[win] === 1 && humanWins[win] === 0) {
+//                console.log("COMPUTER COULD WIN!!");
+//                console.log(compWins[win], win);
+                for(space of win) {
+//                    console.log("can I move here...", space, vm.spacesLeft.indexOf(space));
+                    if(vm.spacesLeft.indexOf(space) !== -1) {
+                        console.log("***TWO-IN-A-ROW***");
+                        move = space;
+                    }
+                }
+            }
+        }
+        
+        // Computer blocks human if human is about to win
         for(win in humanWins) {
 //            console.log("Human has: ", win, ":", humanWins[win]);
             if(humanWins[win] == 2) {
@@ -239,13 +256,14 @@ var ticTacToe = function() {
                 for(space of win) {
 //                    console.log("can I move here...", space, vm.spacesLeft.indexOf(space));
                     if(vm.spacesLeft.indexOf(space) !== -1) {
-//                        console.log("Move here!!! ", space);
+                        console.log("***BLOCK HUMAN***");
                         move = space;
                     }
                 }
             }
         }
         
+        // Computer wins if it can
         for(win in compWins) {
 //            console.log("Computer has: ", win, ":", compWins[win]);
             if(compWins[win] === 2) {
@@ -254,7 +272,7 @@ var ticTacToe = function() {
                 for(space of win) {
 //                    console.log("can I move here...", space, vm.spacesLeft.indexOf(space));
                     if(vm.spacesLeft.indexOf(space) !== -1) {
-//                        console.log("Move here!!! ", space);
+                        console.log("***COMPUTER WINS***");
                         move = space;
                     }
                 }
