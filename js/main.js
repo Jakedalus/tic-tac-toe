@@ -173,25 +173,25 @@ var ticTacToe = function() {
         return false;
     }
     
-    function checkWin(player) {
-        
-        for(win of wins) {
-//            console.log("Testing winning combo: ", win);
-            var hasWon = true;
-            for(num of win) {
-//                console.log("Position: ", num);
-                if(player.indexOf(num) === -1) {
-                    hasWon = false;
-                }
-            }
-            if(hasWon) {
-                vm.winner = vm.currentPlayer;
-                return true;
-            }
-        }
-        
-        return false;
-    }
+//    function checkWin(player) {
+//        
+//        for(win of wins) {
+////            console.log("Testing winning combo: ", win);
+//            var hasWon = true;
+//            for(num of win) {
+////                console.log("Position: ", num);
+//                if(player.indexOf(num) === -1) {
+//                    hasWon = false;
+//                }
+//            }
+//            if(hasWon) {
+//                vm.winner = vm.currentPlayer;
+//                return true;
+//            }
+//        }
+//        
+//        return false;
+//    }
     
     function makeComputerMove() {
         switch(vm.difficulty) {

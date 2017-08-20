@@ -89,7 +89,21 @@ h1 {
     text-align: center;
 }
 
-#won, #draw, #bye, #x-or-o, #difficulty-setting, #one-or-two {
+button {
+    border-radius: 0;
+    background: $dark-gray;
+//    border: 4px solid $dark-gray;
+    border: 0;
+
+    box-shadow: 0;
+    color: $light-gray;
+    padding: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
+    font-size: .9em;
+}
+
+#won, #draw, #x-or-o, #difficulty-setting, #one-or-two {
     font-family: $display-font;
     position: fixed;
     left: 50%;
@@ -100,11 +114,23 @@ h1 {
     opacity: 0.9;
     padding: 10px;
     text-align: center;
+
 }
 
-#bye {
-    background-color: darkseagreen;
+
+//.fade-enter-active {
+//    transition: all 0s ease;
+//}
+.fade-leave-active {
+    transition: all .2s ease;
 }
+
+.fade-enter, .fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+
+  opacity: 0 !important;
+}
+
 
 
 

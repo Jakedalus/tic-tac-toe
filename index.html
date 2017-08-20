@@ -14,25 +14,31 @@
         <div id="app">
             <h1>Tic Tac Toe</h1>
             
-            <div v-show="computerPlayer === ''" id="one-or-two">
-                <h2>One Player or Two Player?</h2>
-                <button @click="chooseOneOrTwo(true)">One Player</button>
-                <button @click="chooseOneOrTwo(false)">Two Player</button>
-            </div>
+            <transition name="fade" mode="out-in">
+                <div v-if="computerPlayer === ''" id="one-or-two" key="one-or-two">
+                    <h2>One Player or Two Player?</h2>
+                    <button @click="chooseOneOrTwo(true)">One Player</button>
+                    <button @click="chooseOneOrTwo(false)">Two Player</button>
+                </div>
             
-            <div v-show="computerPlayer && difficulty === ''" id="difficulty-setting">
-                <h2>Difficulty Setting</h2>
-                <button @click="chooseDifficulty('easy')">Easy</button>
-                <button @click="chooseDifficulty('medium')">Medium</button>
-                <button @click="chooseDifficulty('hard')">Hard</button>
-            </div>
             
-            <div v-show="difficulty !== '' && XorO === ''" id="x-or-o">
-                <h2>X or O?</h2>
-                <button @click="chooseXorO('X')">X</button>
-                <button @click="chooseXorO('O')">O</button>
-            </div>
             
+                <div v-if="computerPlayer && difficulty === ''" id="difficulty-setting" key="difficulty-setting">
+                    <h2>Difficulty Setting</h2>
+                    <button @click="chooseDifficulty('easy')">Easy</button>
+                    <button @click="chooseDifficulty('medium')">Medium</button>
+                    <button @click="chooseDifficulty('hard')">Hard</button>
+                </div>
+            
+            
+            
+                <div v-if="difficulty !== '' && XorO === ''" id="x-or-o" key="x-or-o">
+                    <h2>X or O?</h2>
+                    <button @click="chooseXorO('X')">X</button>
+                    <button @click="chooseXorO('O')">O</button>
+                </div>
+            </transition>
+        
             <div id="whosTurn">
                 <span :class="{active: currentPlayer==='X'}">X</span > | 
                 <span :class="{active: currentPlayer==='O'}">O</span>
@@ -51,19 +57,21 @@
 
             </div>
             
-            <div v-show="someoneHasWon" id="won">
-                <h2>{{ winner }} Won!</h2>
-                <h3>Play Again?</h3>
-                <button @click="resetBoard">Play Again</button>
-                <button @click="hardReset">Start Over</button>
-            </div>
-            
-            <div v-show="spacesLeft === '' && !someoneHasWon" id="draw">
-                <h2>It's a draw!</h2>
-                <h3>Play Again?</h3>
-                <button @click="resetBoard">Play Again</button>
-                <button @click="hardReset">Start Over</button>
-            </div>
+            <transition name="fade">
+                <div v-if="someoneHasWon" id="won" key="won">
+                    <h2>{{ winner }} Won!</h2>
+                    <h3>Play Again?</h3>
+                    <button @click="resetBoard">Play Again</button>
+                    <button @click="hardReset">Start Over</button>
+                </div>
+
+                <div v-if="spacesLeft === '' && !someoneHasWon" id="draw" key="draw">
+                    <h2>It's a draw!</h2>
+                    <h3>Play Again?</h3>
+                    <button @click="resetBoard">Play Again</button>
+                    <button @click="hardReset">Start Over</button>
+                </div>
+            </transition>
             
 <!--
             <div v-show="goodbye" id="bye">
