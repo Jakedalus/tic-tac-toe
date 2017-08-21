@@ -101,6 +101,12 @@ button {
     margin-right: 5px;
     margin-left: 5px;
     font-size: .9em;
+    outline: none;
+}
+
+button:hover {
+    background: $light-gray;
+    color: $dark-gray;
 }
 
 #won, #draw, #x-or-o, #difficulty-setting, #one-or-two {
