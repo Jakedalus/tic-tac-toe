@@ -1,0 +1,23 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "Tic Tac Toe game with 3 levels of difficulty",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jakedalus/tic-tac-toe.git"
+  },
+  "author": "Jake Carpenter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jakedalus/tic-tac-toe/issues"
+  },
+  "homepage": "https://github.com/Jakedalus/tic-tac-toe#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-remove-logging": "^0.2.0"
+  }
+}
