@@ -47,6 +47,9 @@ h1 {
 .o-mark {
   color: #f5ed18; }
 
+[v-cloak] {
+  display: none; }
+
 /*Messages*/
 #whosTurn {
   width: 30%;

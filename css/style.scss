@@ -82,6 +82,10 @@ h1 {
     color: $golden-yellow;
 }
 
+[v-cloak] { 
+    display: none; 
+}
+
 /*Messages*/
 #whosTurn {
     width: 30%;
