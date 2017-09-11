@@ -578,6 +578,21 @@ var ticTacToe = function() {
             }
         }
         
+        // If computer is an O responding to the second X move
+        if(vm.XorO === 'X' && vm.spacesLeft.length === 7) {
+            
+            var corners = [0,2,6,8];
+            var x_corners = 0;
+            for(corner in corners) {
+                if(vm.spacesLeft.indexOf(corner) != -1) x_corners += 1;
+            }
+            
+            if(x_corners == 2) {
+                var edges = [1,3,5,7];
+                move = edges[Math.round(Math.random() * (edges.length - 1))];
+            }
+        }
+        
         markBoard(move);
         
     }
